@@ -18,8 +18,8 @@ class _MyGameState extends State<MyGame> {
   double time = 0;
   double gravity = -4.9;
   double velocity = 3.5;
-  double birdWidth = 0.1;
-  double birdheight = 0.1;
+  double birdWidth = 0.2;
+  double birdheight = 0.2;
 
   bool gameHasStated = false;
 
@@ -42,9 +42,22 @@ class _MyGameState extends State<MyGame> {
         timer.cancel();
         _showDialog();
       }
+      moveMap();
 
       time += 0.01;
     });
+  }
+
+  void moveMap() {
+    for (int i = 0; i < barrierX.length; i++) {
+      setState(() {
+        barrierX[i] -= 0.005;
+      });
+
+      if (barrierX[i] < -1.5) {
+        barrierX[i] += 3;
+      }
+    }
   }
 
   void _showDialog() {
@@ -82,11 +95,11 @@ class _MyGameState extends State<MyGame> {
     if (birdY < -1 || birdY > 1) {
       return true;
     }
-    for (var i = 0; i < barrierX.length; i++) {
-      if (barrierX[i] < birdWidth &&
+    for (int i = 0; i < barrierX.length; i++) {
+      if (barrierX[i] <= birdWidth &&
           barrierX[i] + barrierWidth >= -birdWidth &&
           (birdY <= -1 + barrierHeight[i][0] ||
-              birdY + birdheight >= 1 - barrierHeight[i][i])) {
+              birdY + birdheight >= 1 - barrierHeight[i][1])) {
         return true;
       }
     }
@@ -106,6 +119,7 @@ class _MyGameState extends State<MyGame> {
       birdY = 0;
       gameHasStated = false;
       time = 0;
+      barrierX = [2, 2 + 1.5];
       initialPos = birdY;
     });
   }

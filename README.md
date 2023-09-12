@@ -27,7 +27,7 @@ git clone
 
 ```bash
   cd project-directory
-  npm i
+  F5
 ```
 
 ## Important files

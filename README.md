@@ -3,6 +3,8 @@
 Flappy Bird is a mobile game developed by the Vietnamese video game artist and programmer Dong Nguyen, under his game development company .Gears. The game is a side-scroller where the player controls a bird, attempting to fly between columns of green pipes without hitting them.
 
 ## Screenshots
+<img src="https://github.com/sonukuldeep/Flutter-flappy-bird/assets/57728165/9a7b6e8b-259c-4f6f-87ae-5428a943f978" alt="image 1" width="300"/>
+<img src="https://github.com/sonukuldeep/Flutter-flappy-bird/assets/57728165/ce153cd7-5c65-42dd-a6cc-9b1f64e7213c" alt="image 2" width="300"/>
 
 ## Acknowledgements
 
@@ -25,7 +27,7 @@ git clone
 
 ```bash
   cd project-directory
-  npm i
+  F5
 ```
 
 ## Important files

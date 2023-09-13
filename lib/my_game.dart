@@ -13,6 +13,8 @@ class MyGame extends StatefulWidget {
 
 class _MyGameState extends State<MyGame> {
   static double birdY = 0;
+  static double jumps = 0;
+  static double best = 0;
   double initialPos = birdY;
   double height = 0;
   double time = 0;
@@ -109,6 +111,7 @@ class _MyGameState extends State<MyGame> {
   void jump() {
     setState(() {
       time = 0;
+      jumps++;
       initialPos = birdY;
     });
   }
@@ -121,6 +124,10 @@ class _MyGameState extends State<MyGame> {
       time = 0;
       barrierX = [2, 2 + 1.5];
       initialPos = birdY;
+      if (jumps > best) {
+        best = jumps;
+      }
+      jumps = 0;
     });
   }
 
@@ -182,6 +189,37 @@ class _MyGameState extends State<MyGame> {
             Expanded(
               child: Container(
                 color: Colors.brown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${jumps.toInt()}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const Text(
+                          "Score",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${best.toInt()}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const Text(
+                          "Best",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ],

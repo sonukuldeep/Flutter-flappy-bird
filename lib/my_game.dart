@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:game/barrier.dart';
 import 'package:game/bird.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyGame extends StatefulWidget {
   const MyGame({super.key});
@@ -13,8 +14,8 @@ class MyGame extends StatefulWidget {
 
 class _MyGameState extends State<MyGame> {
   static double birdY = 0;
-  static double jumps = 0;
-  static double best = 0;
+  static int jumps = 0;
+  static int best = 0;
   double initialPos = birdY;
   double height = 0;
   double time = 0;
@@ -33,6 +34,7 @@ class _MyGameState extends State<MyGame> {
   ];
   void startGame() {
     gameHasStated = true;
+    loadBestScore();
     Timer.periodic(const Duration(milliseconds: 10), (timer) {
       height = gravity * time * time + velocity * time;
 
@@ -125,10 +127,22 @@ class _MyGameState extends State<MyGame> {
       barrierX = [2, 2 + 1.5];
       initialPos = birdY;
       if (jumps > best) {
-        best = jumps;
+        saveBestScore(jumps);
       }
       jumps = 0;
     });
+  }
+
+  void loadBestScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      best = prefs.getInt('best') ?? 0;
+    });
+  }
+
+  void saveBestScore(int score) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('best', score);
   }
 
   @override
@@ -196,7 +210,7 @@ class _MyGameState extends State<MyGame> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${jumps.toInt()}",
+                          "$jumps",
                           style: const TextStyle(color: Colors.white),
                         ),
                         const Text(
@@ -209,7 +223,7 @@ class _MyGameState extends State<MyGame> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${best.toInt()}",
+                          "$best",
                           style: const TextStyle(color: Colors.white),
                         ),
                         const Text(
